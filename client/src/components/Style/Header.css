@@ -1,0 +1,18 @@
+header {
+
+    display: flex;
+    justify-content: space-between;
+
+}
+
+img {
+    width: 80px;
+}
+
+.navBar {
+    width: 500px ;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 100px;
+    list-style: none;
+}
