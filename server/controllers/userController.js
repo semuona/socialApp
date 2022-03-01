@@ -29,7 +29,7 @@ exports.registerUser = async (req, res) => {
 
 // Delete user from DB
 exports.deleteUser = async (req, res) => {
-  console.log("Add user qurey is", req.query);
+  console.log("Add user query is", req.query);
   try {
     const deletedUser = await User.findByIdAndDelete(req.query.id);
 

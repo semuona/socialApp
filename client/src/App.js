@@ -1,6 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -53,6 +55,7 @@ function App() {
 
   return (
     <div className="App">
+      <Profile />
       <input value={email} onChange={(e) => setEmail(e.target.value)} />
       <input value={address} onChange={(e) => setAddress(e.target.value)} />
 
