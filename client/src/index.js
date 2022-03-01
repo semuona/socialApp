@@ -3,14 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import SocialAppContextProvider from "./components/Context";
+import AppContext from "./components/Context";
 
 ReactDOM.render(
-  <React.StrictMode>
+  /*  <React.StrictMode>
     <SocialAppContextProvider>
       <App />
     </SocialAppContextProvider>
-  </React.StrictMode>,
+  </React.StrictMode>, */
+  <AppContext>
+    <App />
+  </AppContext>,
+
   document.getElementById("root")
 );
 
@@ -18,3 +22,7 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+function Index() {
+  return <div>index</div>;
+}
