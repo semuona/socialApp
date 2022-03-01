@@ -35,7 +35,8 @@ export default function Profile() {
 
   return (
     <div style={{ border: "1px solid red" }}>
-      <h1>Profile Component: Welcome: username</h1>
+      <h1>Profile Component:</h1>
+      <h1> Welcome: username</h1>
       <button onClick={() => setShowModal(true)}>Add post</button>
 
       {posts?.map((item) => (
