@@ -3,6 +3,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Header from "./components/Header";
+import "./App.css";
+
 
 export default function App() {
   return (
