@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
@@ -11,8 +11,12 @@ import {
   Link,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { SocialAppContext } from "./Context";
+
+
 
 export default function Register() {
+  const {users, setUsers} = useContext(SocialAppContext)
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -22,14 +26,12 @@ export default function Register() {
   const history = useHistory();
 
   const handleClick = async () => {
-    console.log("data is", data);
-    if (!data.pass || !data.username || !data.email) return
-
     const response = await axios.post("/users/register", data);
-
-    console.log("response is ", response);
-
-    if (response.data.success) history.push("/login");
+    console.log("response is", response);
+    if (response.data.success) {
+      console.log("users are", users);
+     await setUsers([...users, response.data.newUser]);
+    }
   };
 
   const container = {
