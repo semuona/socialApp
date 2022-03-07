@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { SocialAppContext } from "../Context";
 import Modal from "../Modal/Modal";
 export default function Profile() {
-  const { user, posts, setPosts, setUser } = useContext(SocialAppContext);
+  const { users, posts, setPosts, setUsers, loggedInUser, setLoggedInUser } =
+    useContext(SocialAppContext);
 
   // States
   const [showModal, setShowModal] = useState(false);
@@ -16,8 +17,8 @@ export default function Profile() {
     console.log("saved");
 
     const data = {
-      owner: user._id,
-      text: text,
+      owner: loggedInUser._id,
+      description: text,
       image: image,
     };
 
@@ -36,9 +37,9 @@ export default function Profile() {
   return (
     <div style={{ border: "1px solid red" }}>
       <h1>Profile Component:</h1>
-      <h1> Welcome: username</h1>
+      <h1> Welcome: {loggedInUser ? loggedInUser.username : "Stranger"}</h1>
       <button onClick={() => setShowModal(true)}>Add post</button>
-
+      <h1>Your Posts:</h1>
       {posts?.map((item) => (
         <div
           style={{
@@ -46,9 +47,11 @@ export default function Profile() {
             padding: "30px",
             margin: "20px",
           }}
-          key={item._id}
+          key={item?._id}
         >
-          {item.owner.username} == {item.text}
+          <p>{item?.description}</p>
+          <button>Delete post</button>
+          <button>Edit post</button>
         </div>
       ))}
       {showModal ? (
@@ -62,9 +65,7 @@ export default function Profile() {
             setImage(URL.createObjectURL(e.target.files[0]));
           }}
         />
-      ) : (
-        <p>No posts available</p>
-      )}
+      ) : null}
     </div>
   );
 }

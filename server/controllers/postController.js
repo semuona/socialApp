@@ -21,10 +21,12 @@ exports.addPost = async (req, res) => {
 
 exports.listPosts = async (req, res) => {
   try {
-    const posts = await Post.find().limit(10).populate({
+    const posts = await Post.find();
+
+    /*  .populate({
       path: "owner",
       select: "username",
-    });
+    }); */
 
     res.send(posts);
   } catch (error) {
@@ -32,5 +34,3 @@ exports.listPosts = async (req, res) => {
     res.send(error.message);
   }
 };
-
-module.exports = router;

@@ -29,11 +29,18 @@ export default function Header() {
         </NavLink>
       </div> */}
       <ul className="navBar">
+        {" "}
+        <NavLink className="navItem" to="/">
+          <li>Home</li>
+        </NavLink>
         <NavLink className="navItem" to="/Login">
           <li>Log in</li>
         </NavLink>
         <NavLink className="navItem" to="/Register">
           <li>Register</li>
+        </NavLink>
+        <NavLink className="navItem" to="/Profile">
+          <li>Profile</li>
         </NavLink>
         <Button
           type="submit"

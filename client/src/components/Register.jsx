@@ -13,10 +13,8 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { SocialAppContext } from "./Context";
 
-
-
 export default function Register() {
-  const {users, setUsers, setLoggedInUser} = useContext(SocialAppContext)
+  const { users, setUsers, setLoggedInUser } = useContext(SocialAppContext);
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -31,8 +29,8 @@ export default function Register() {
     if (response.data.success) {
       console.log("users are", users);
       setUsers([...users, response.data.newUser]);
-      setLoggedInUser(response.data.newUser)
-      history.push("/login")
+      setLoggedInUser(response.data.newUser);
+      history.push("/login");
     }
   };
 

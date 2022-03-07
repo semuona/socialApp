@@ -10,7 +10,14 @@ export default function AppContext({ children }) {
 
   return (
     <SocialAppContext.Provider
-      value={{ users, setUsers, loggedInUser, setLoggedInUser, posts, setPosts }}
+      value={{
+        users,
+        setUsers,
+        loggedInUser,
+        setLoggedInUser,
+        posts,
+        setPosts,
+      }}
     >
       {children}
     </SocialAppContext.Provider>
