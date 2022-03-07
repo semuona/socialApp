@@ -34,7 +34,7 @@ export default function Login() {
 
     if (response.data.success) {
       setUsers({ ...response.data });
-      history.push("/home");
+      history.push("/");
     }
   };
 

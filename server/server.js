@@ -4,7 +4,7 @@ const app = express();
 require("dotenv").config();
 
 app.use(express.json());
-app.use("/users", require("./api/users"));
+app.use('/users', require('./routes/userRoutes'))
 const connectToDb = require("./config/db");
 
 connectToDb();

@@ -6,7 +6,7 @@ export const SocialAppContext = createContext();
 export default function AppContext({ children }) {
   const [users, setUsers] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   return (
     <SocialAppContext.Provider

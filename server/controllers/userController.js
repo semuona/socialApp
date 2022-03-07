@@ -44,3 +44,29 @@ exports.deleteUser = async (req, res) => {
     res.send(error.message);
   }
 };
+
+//LoginUser
+
+exports.loginUser = async (req, res) => {
+
+  try {
+      
+      console.log('req.body is', req.body)
+
+      const {email, pass, username} = req.body
+
+      if (!(email || username) || !pass) return res.send({success: false, errorId: 1})
+
+      const user = await User.findOne({$or: [{email}, {username}], pass}).select('-pass -__v')
+
+      console.log('Login: user is', user)
+
+      if (!user) return res.send({success: false, errorId: 2})
+
+      res.send({success: true, user})
+  } catch (error) {
+      
+      console.log('Register ERROR:', error.message)
+      res.send(error.message)
+  }
+}

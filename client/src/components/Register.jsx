@@ -16,7 +16,7 @@ import { SocialAppContext } from "./Context";
 
 
 export default function Register() {
-  const {users, setUsers} = useContext(SocialAppContext)
+  const {users, setUsers, setLoggedInUser} = useContext(SocialAppContext)
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -30,7 +30,9 @@ export default function Register() {
     console.log("response is", response);
     if (response.data.success) {
       console.log("users are", users);
-     await setUsers([...users, response.data.newUser]);
+      setUsers([...users, response.data.newUser]);
+      setLoggedInUser(response.data.newUser)
+      history.push("/login")
     }
   };
 
