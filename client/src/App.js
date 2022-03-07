@@ -3,8 +3,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Header from "./components/Header";
+import Profile from "./components/Profile/Profile";
 import "./App.css";
-
 
 export default function App() {
   return (
@@ -13,7 +13,8 @@ export default function App() {
       <Switch>
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
-        <Route path="/home" exact component={Home} />
+        <Route path="/profile" exact component={Profile} />
+        <Route path="/" exact component={Home} />
         <Route component={Unknown} />
       </Switch>
     </div>

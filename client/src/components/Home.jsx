@@ -1,26 +1,42 @@
 import { useContext, useEffect } from "react";
 import { SocialAppContext } from "./Context";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 export default function Home() {
-  const history = useHistory();
-
-  const { user, setUser } = useContext(SocialAppContext);
+  const { posts, setPosts } = useContext(SocialAppContext);
 
   useEffect(() => {
-    if (!user) history.push("/");
-  });
+    const getData = async () => {
+      const response = await axios.get("/posts/listPosts");
 
-  const handleLogout = () => {
-    setUser(null);
+      console.log("useEffect response from listing posts", response);
 
-    history.push("/");
-  };
+      setPosts([...response.data]);
+    };
+
+    getData();
+  }, []);
 
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
-      Hello this is home
+      hello home
+      {posts?.map((item) => (
+        <div
+          style={{
+            border: "1px solid",
+            padding: "30px",
+            margin: "20px",
+          }}
+          key={item?._id}
+        >
+          <h1>Creator: {item?.owner?.username} </h1>
+          <br />
+          <p>{item?.description}</p>
+          <button>Delete post</button>
+          <button>Edit post</button>
+        </div>
+      ))}
     </div>
   );
 }
