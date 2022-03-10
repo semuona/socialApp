@@ -27,6 +27,7 @@ export default function Modal({
         onChange={onChangeFile}
         type="file"
         name="image"
+        id="file"
       />
       <p>
         <button onClick={close}>Close</button>

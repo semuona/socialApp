@@ -20,7 +20,7 @@ export default function Login() {
     pass: "",
   });
 
-  const { setUsers } = useContext(SocialAppContext);
+  const { setUsers, setLoggedInUser } = useContext(SocialAppContext);
 
   const history = useHistory();
 
@@ -33,7 +33,7 @@ export default function Login() {
     console.log("response is ", response);
 
     if (response.data.success) {
-      setUsers({ ...response.data });
+      setLoggedInUser(response.data.user);
       history.push("/home");
     }
   };
