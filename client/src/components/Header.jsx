@@ -4,13 +4,17 @@ import "./Style/Header.css";
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import { useContext } from "react";
+import { SocialAppContext } from "./Context";
 
 export default function Header() {
+  const {setUsers} = useContext(SocialAppContext)
   const history = useHistory();
 
-  function handleClick() {
-    history.push("/Register");
-  }
+  const handleLogout = () => {
+    setUsers(null);
+    history.push("/register");
+  };
 
   const style = {
     width: "98px",
@@ -44,7 +48,7 @@ export default function Header() {
           variant="contained"
           fullWidth
           style={style}
-          onClick={handleClick}
+          onClick={handleLogout}
         >
           Log out
         </Button>
