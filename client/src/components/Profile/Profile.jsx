@@ -12,28 +12,46 @@ export default function Profile() {
   // States
   const [showModal, setShowModal] = useState(false);
   const [text, setText] = useState("");
-  const [image, setImage] = useState("");
-  const handleSave = async () => {
-    console.log("saved");
+  const [fileUrl, setFileUrl] = useState("");
+  const [blobFile, setBlobFile] = useState(null);
 
-    const data = {
-      owner: loggedInUser._id,
-      description: text,
-      image: image,
+  const data = {
+    owner: loggedInUser._id,
+    description: text,
+    image: fileUrl,
+  };
+
+  const handleSave = async () => {
+    const formdata = new FormData();
+
+    Object.entries(data).forEach((item) => formdata.set(item[0], item[1]));
+
+    if (blobFile) formdata.set("image", blobFile, "somefilename"); // add a file and a name
+
+    const config = {
+      headers: { "content-type": "mulitpart/form-data" },
     };
 
     console.log("Home: handleSave: data is", data);
-    const response = await axios.post("/posts/addPost", data);
+    const response = await axios.post("/posts/addPost", formdata, config);
 
     console.log("save post: response is", response);
 
-    setText("");
-    setImage("");
-    setShowModal(false);
+    /*   setText("");
+    setShowModal(false); */
 
     if (response.data.success) setPosts([...posts, response.data.post]);
   };
+  const handleImageChange = (e) => {
+    console.log("File is", e.currentTarget.files[0]);
+    // console.log('File is', e.target.files[0])
 
+    const file = e.currentTarget.files[0];
+
+    setFileUrl(URL.createObjectURL(file)); // create a url from file user chose and update the state
+
+    setBlobFile(e.currentTarget.files[0]);
+  };
   return (
     <div style={{ border: "1px solid red" }}>
       <h1>Profile Component:</h1>
@@ -50,6 +68,11 @@ export default function Profile() {
           key={item?._id}
         >
           <p>{item?.description}</p>
+          <img
+            src={item.image}
+            alt=""
+            style={{ height: "300px", width: "300px", objectFit: "cover" }}
+          />
           <button>Delete post</button>
           <button>Edit post</button>
         </div>
@@ -59,11 +82,8 @@ export default function Profile() {
           save={handleSave}
           close={() => setShowModal(false)}
           valueText={text}
-          valueImage={image}
           onTextChange={(e) => setText(e.target.value)}
-          onChangeFile={(e) => {
-            setImage(URL.createObjectURL(e.target.files[0]));
-          }}
+          onChangeFile={handleImageChange}
         />
       ) : null}
     </div>
