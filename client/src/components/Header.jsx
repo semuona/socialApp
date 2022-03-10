@@ -1,48 +1,72 @@
 import React from "react";
-import "./Style/Header.css";
-/* import image from "/home/user/dci/Food-delivery-app/client/src/images/Black Simple Cafe Restaurant Food Logo.png"; */
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { Button } from "@material-ui/core";
 import { useContext } from "react";
 import { SocialAppContext } from "./Context";
+import { AppBar,
+  Toolbar,
+  CssBaseline,
+  Typography,
+  makeStyles, Button } from "@material-ui/core";
+
+  const useStyles = makeStyles((theme) => ({
+    navlinks: {
+      marginLeft: theme.spacing(10),
+      display: "flex",
+    },
+   logo: {
+      flexGrow: "1",
+      cursor: "pointer",
+    },
+    link: {
+      textDecoration: "none",
+      color: "white",
+      fontSize: "20px",
+      marginLeft: theme.spacing(20),
+      "&:hover": {
+        color: "yellow",
+        borderBottom: "1px solid white",
+      },
+    },
+  }));
 
 export default function Header() {
   const {setUsers} = useContext(SocialAppContext)
   const history = useHistory();
+  const classes = useStyles()
 
   const handleLogout = () => {
     setUsers(null);
-    history.push("/register");
+    history.push("/Register");
   };
 
   const style = {
     width: "98px",
     height: "40px",
+    marginLeft: "50px"
   };
 
   return (
-    <header>
-      {/*  <div className="logo">
-        <NavLink to="/">
-          <img src={image} alt="" />
-        </NavLink>
-      </div> */}
-      <ul className="navBar">
-        {" "}
-        <NavLink className="navItem" to="/">
-          <li>Home</li>
-        </NavLink>
-        <NavLink className="navItem" to="/Login">
-          <li>Log in</li>
-        </NavLink>
-        <NavLink className="navItem" to="/Register">
-          <li>Register</li>
-        </NavLink>
-        <NavLink className="navItem" to="/Profile">
-          <li>Profile</li>
-        </NavLink>
-        <Button
+    <AppBar position="static">
+      <CssBaseline />
+      <Toolbar>
+        <Typography variant="h4" className={classes.logo}>
+          Navbar
+        </Typography>
+          <div className={classes.navlinks}>
+            <NavLink to="/" className={classes.link}>
+              Home
+            </NavLink>
+            <NavLink to="Profile" className={classes.link}>
+              Profile
+            </NavLink>
+            <NavLink to="/Register" className={classes.link}>
+              Register
+            </NavLink>
+            <NavLink to="/Login" className={classes.link}>
+              Login
+            </NavLink>
+            <Button
           type="submit"
           color="secondary"
           variant="contained"
@@ -52,7 +76,8 @@ export default function Header() {
         >
           Log out
         </Button>
-      </ul>
-    </header>
+          </div>
+      </Toolbar>
+    </AppBar>
   );
 }

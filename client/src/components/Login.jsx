@@ -20,7 +20,7 @@ export default function Login() {
     pass: "",
   });
 
-  const { setUsers } = useContext(SocialAppContext);
+  const { setUsers, setLoggedInUser } = useContext(SocialAppContext);
 
   const history = useHistory();
 
@@ -33,7 +33,7 @@ export default function Login() {
     console.log("response is ", response);
 
     if (response.data.success) {
-      setUsers({ ...response.data });
+      setLoggedInUser(response.data.user);
       history.push("/");
     }
   };
@@ -41,8 +41,8 @@ export default function Login() {
   const container = {
     padding: "40px",
     height: "60vh",
-    width: 280,
-    margin: "20px auto",
+    width: 300,
+    margin: "100px auto",
   };
   const avatarIcon = { backgroundColor: "blue" };
   const btn = { marginTop: "40px", marginBottom: "30px" };
@@ -64,7 +64,6 @@ export default function Login() {
           id="email"
           value={data.email}
         />
-        OR
         <TextField
           label="Username"
           placeholder="Enter username"

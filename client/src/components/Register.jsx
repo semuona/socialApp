@@ -37,8 +37,8 @@ export default function Register() {
   const container = {
     padding: "40px",
     height: "60vh",
-    width: 280,
-    margin: "20px auto",
+    width: 300,
+    margin: "100px auto",
   };
   const avatarIcon = { backgroundColor: "blue" };
   const btn = { marginTop: "40px", marginBottom: "30px" };
@@ -60,7 +60,6 @@ export default function Register() {
           id="email"
           value={data.email}
         />
-        OR
         <TextField
           label="Username"
           placeholder="Enter username"
