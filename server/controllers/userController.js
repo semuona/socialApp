@@ -63,3 +63,41 @@ exports.loginUser = async (req, res) => {
     res.send(error.message);
   }
 };
+exports.addFollower = async (req, res) => {
+  try {
+    console.log("follow user id is", req.params.userid);
+
+    const { userid } = req.params;
+
+    // 1. get the user
+    const userToUpdate = await User.findById(userid);
+    console.log("post to update BEFORE is", userToUpdate);
+
+    // 2. update the followers array
+
+    console.log("user to update is", userToUpdate);
+
+    const idx = userToUpdate.followers.findIndex((item) => item == userid);
+
+    console.log("idx IS", idx);
+    // check if user is in the follower array
+    if (idx > -1) {
+      // -1 means that user not found in the array
+      // if yes, then remove him
+      userToUpdate.followers.splice(idx, 1);
+    } else {
+      // if no then add him
+      userToUpdate.followers.push(userid);
+    }
+
+    // 3. update the user in the DB
+
+    const user = await userToUpdate.save();
+
+    console.log("user is", user);
+    res.send({ success: true, user });
+  } catch (error) {
+    console.log("Like add ERROR", error.message);
+    res.send(error.message);
+  }
+};

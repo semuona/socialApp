@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: "1",
     fontFamily: "Allura",
     fontSize: "2.5rem",
+    cursor: "pointer",
   },
   link: {
     textDecoration: "none",
@@ -35,13 +36,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
-  const { setUsers, loggedInUser, setLoggedInUser } =
-    useContext(SocialAppContext);
+  const { setUsers, setLoggedInUser, loggedInUser } = useContext(SocialAppContext);
   const history = useHistory();
   const classes = useStyles();
 
   const handleLogout = () => {
-    setUsers(null);
+    setLoggedInUser(null);
+    localStorage.removeItem("authorizedUser");
     history.push("/Register");
     setLoggedInUser("");
   };

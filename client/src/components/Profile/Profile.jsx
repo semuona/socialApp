@@ -16,7 +16,7 @@ export default function Profile() {
   const [blobFile, setBlobFile] = useState(null);
 
   const data = {
-    owner: loggedInUser._id,
+    owner: loggedInUser?._id,
     description: text,
     image: fileUrl,
   };
@@ -37,8 +37,8 @@ export default function Profile() {
 
     console.log("save post: response is", response);
 
-    /*   setText("");
-    setShowModal(false); */
+    setText("");
+    setShowModal(false);
 
     if (response.data.success) setPosts([...posts, response.data.post]);
   };
@@ -69,7 +69,7 @@ export default function Profile() {
         >
           <p>{item?.description}</p>
           <img
-            src={item.image}
+            src={item?.image}
             alt=""
             style={{ height: "300px", width: "300px", objectFit: "cover" }}
           />

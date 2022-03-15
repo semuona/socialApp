@@ -20,7 +20,13 @@ export default function Login() {
     pass: "",
   });
 
-  const { setUsers, setLoggedInUser } = useContext(SocialAppContext);
+  const { setUsers, setLoggedInUser, loggedInUser } =
+    useContext(SocialAppContext);
+
+  const saveUserToLocal = (user) => {
+    const stringUser = JSON.stringify(user);
+    localStorage.setItem("authorizedUser", stringUser);
+  };
 
   const history = useHistory();
 
@@ -33,7 +39,10 @@ export default function Login() {
     console.log("response is ", response);
 
     if (response.data.success) {
-      setLoggedInUser(response.data.user);
+      setLoggedInUser({ ...response.data.user });
+      console.log("This user Logged in", loggedInUser);
+      saveUserToLocal(response.data.user);
+
       history.push("/");
     }
   };
