@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { SocialAppContext } from "../Context";
 export default function Main() {
-  const { users, posts, setPosts, setUsers, loggedInUser, setLoggedInUser } =
+  /*  const { users, posts, setPosts, setUsers, loggedInUser, setLoggedInUser } =
     useContext(SocialAppContext);
   return (
     <div>
@@ -18,5 +18,5 @@ export default function Main() {
         </div>
       ))}
     </div>
-  );
+  ); */
 }

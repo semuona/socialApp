@@ -3,47 +3,52 @@ import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { SocialAppContext } from "./Context";
-import { AppBar,
+import {
+  AppBar,
   Toolbar,
   CssBaseline,
   Typography,
-  makeStyles, Button } from "@material-ui/core";
+  makeStyles,
+  Button,
+} from "@material-ui/core";
 
-  const useStyles = makeStyles((theme) => ({
-    navlinks: {
-      marginLeft: theme.spacing(10),
-      display: "flex",
+const useStyles = makeStyles((theme) => ({
+  navlinks: {
+    marginLeft: theme.spacing(10),
+    display: "flex",
+  },
+  logo: {
+    flexGrow: "1",
+    cursor: "pointer",
+  },
+  link: {
+    textDecoration: "none",
+    color: "white",
+    fontSize: "20px",
+    marginLeft: theme.spacing(20),
+    "&:hover": {
+      color: "yellow",
+      borderBottom: "1px solid white",
     },
-   logo: {
-      flexGrow: "1",
-      cursor: "pointer",
-    },
-    link: {
-      textDecoration: "none",
-      color: "white",
-      fontSize: "20px",
-      marginLeft: theme.spacing(20),
-      "&:hover": {
-        color: "yellow",
-        borderBottom: "1px solid white",
-      },
-    },
-  }));
+  },
+}));
 
 export default function Header() {
-  const {setUsers} = useContext(SocialAppContext)
+  const { setUsers, setLoggedInUser } = useContext(SocialAppContext);
   const history = useHistory();
-  const classes = useStyles()
+  const classes = useStyles();
 
   const handleLogout = () => {
-    setUsers(null);
+    setLoggedInUser(null);
+    localStorage.removeItem("authorizedUser");
     history.push("/Register");
+    window.location.reload(true);
   };
 
   const style = {
     width: "98px",
     height: "40px",
-    marginLeft: "50px"
+    marginLeft: "50px",
   };
 
   return (
@@ -53,30 +58,30 @@ export default function Header() {
         <Typography variant="h4" className={classes.logo}>
           Navbar
         </Typography>
-          <div className={classes.navlinks}>
-            <NavLink to="/" className={classes.link}>
-              Home
-            </NavLink>
-            <NavLink to="Profile" className={classes.link}>
-              Profile
-            </NavLink>
-            <NavLink to="/Register" className={classes.link}>
-              Register
-            </NavLink>
-            <NavLink to="/Login" className={classes.link}>
-              Login
-            </NavLink>
-            <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          fullWidth
-          style={style}
-          onClick={handleLogout}
-        >
-          Log out
-        </Button>
-          </div>
+        <div className={classes.navlinks}>
+          <NavLink to="/" className={classes.link}>
+            Home
+          </NavLink>
+          <NavLink to="Profile" className={classes.link}>
+            Profile
+          </NavLink>
+          <NavLink to="/Register" className={classes.link}>
+            Register
+          </NavLink>
+          <NavLink to="/Login" className={classes.link}>
+            Login
+          </NavLink>
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            fullWidth
+            style={style}
+            onClick={handleLogout}
+          >
+            Log out
+          </Button>
+        </div>
       </Toolbar>
     </AppBar>
   );
