@@ -4,6 +4,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Profile from "./components/Profile/Profile";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/" exact component={Home} />
         <Route component={Unknown} />
       </Switch>
+      <Footer />
     </div>
   );
 }

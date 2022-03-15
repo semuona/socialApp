@@ -1,10 +1,9 @@
 import { useContext, useEffect } from "react";
 import { SocialAppContext } from "./Context";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function Home() {
-  const { posts, setPosts, loggedInUser, setLoggedInUser } = useContext(SocialAppContext);
+  const { posts, setPosts, loggedInUser } = useContext(SocialAppContext);
 
   useEffect(() => {
     const getData = async () => {
