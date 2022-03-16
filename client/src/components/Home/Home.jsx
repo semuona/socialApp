@@ -9,12 +9,14 @@ import "./home.css";
 import axios from "axios";
 import EditPostModal from "./EditPostModal";
 import Pic from "../../img/unknown.png";
+import { useHistory } from "react-router-dom";
 
 export default function Home() {
   const { posts, setPosts, loggedInUser, setLoggedInUser, users, setUsers } =
     useContext(SocialAppContext);
-  const [showEditModal, setShowEditModal] = useState(false);
-
+  const [followedUsers, setFollowedUsers] = useState([]);
+  const history = useHistory();
+  /* ------------LIST POSTS--------------------------------- */
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get("/posts/listPosts");
@@ -27,6 +29,8 @@ export default function Home() {
 
     getData();
   }, []);
+
+  /* ------------LIST USERS--------------------------------- */
   useEffect(() => {
     const getData = async () => {
       const response = await axios.get("/users/list");
@@ -40,6 +44,7 @@ export default function Home() {
     getData();
   }, []);
 
+  /* ------------LIKE POSTS--------------------------------- */
   const handleLikeClick = async (postid) => {
     const response = await axios.put(
       `/posts/likeadd/${postid}/${loggedInUser._id}`
@@ -55,18 +60,41 @@ export default function Home() {
       setPosts([...oldPosts]);
     }
   };
+
+  /* ------------ADD FOLLOWERS--------------------------------- */
   const handleAddFallow = async (userid) => {
-    const response = await axios.put(`/users/addfollow/${loggedInUser._id}`);
+    const response = await axios.put(
+      `/users/addfollow/${loggedInUser._id}/${userid}`
+    );
 
     if (response.data.success) {
-      const userIdx = posts.findIndex((item) => item._id === userid);
+      const userIdx = users.findIndex((item) => item._id === loggedInUser._id);
 
       const oldUsers = [...users];
 
-      oldUsers[userIdx].followers = [...response.data.users.followers];
+      oldUsers[userIdx].followers = [...response.data.user.followers];
 
       setUsers([...oldUsers]);
     }
+  };
+
+  /* ------------GET USER NAME OF FALLOWED USER--------------------------------- */
+  useEffect(() => {
+    loggedInUser?.followers?.map((followerId, idx) => {
+      users?.map((item) => {
+        if (item._id === followerId) {
+          followedUsers.push(item.username);
+        }
+      });
+    });
+  }, []);
+
+  /* -----------------Log Out------------------- */
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem("authorizedUser");
+    history.push("/Login");
+    setLoggedInUser("");
   };
 
   return (
@@ -82,65 +110,30 @@ export default function Home() {
           margin: "5px 0",
         }}
       >
-        <div
-          style={{
-            borderRadius: "50%",
-            border: "1px solid black",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          User
-        </div>
-        <div
-          style={{
-            borderRadius: "50%",
-            border: "1px solid black",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          User
-        </div>
-        <div
-          style={{
-            borderRadius: "50%",
-            border: "1px solid black",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          User
-        </div>
-        <div
-          style={{
-            borderRadius: "50%",
-            border: "1px solid black",
-            width: "50px",
-            height: "50px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          User
-        </div>
+        {followedUsers?.map((item) => (
+          <div
+            style={{
+              borderRadius: "50%",
+              border: "1px solid black",
+              width: "50px",
+              height: "50px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            {item}{" "}
+          </div>
+        ))}
       </div>
       {posts?.map((item) => (
         <div className="postContainer" key={item?._id}>
           <h1 className="creatorContainer">
             <div className="fallow">
               {" "}
-              Creator: {item?.owner.username}{" "}
+              Creator:
+              {item?.owner.username}{" "}
               {loggedInUser?.username === item?.owner.username ? null : (
                 <button
                   style={{
@@ -151,6 +144,7 @@ export default function Home() {
                     marginLeft: "10px",
                     cursor: "pointer",
                   }}
+                  onClick={() => handleAddFallow(item?.owner._id)}
                 >
                   Fallow
                 </button>
@@ -199,21 +193,51 @@ export default function Home() {
         </div>
       ))}
       <div className="sideProfileContainer">
-        Profile Here
-        <img src={Pic} alt="profile" />
+        {loggedInUser ? (
+          <img src={loggedInUser?.image} alt="profPic" width="150px" />
+        ) : null}
+
         <h4>
-          Welcome Back: {loggedInUser?.username}
-          <span style={{ color: "red", cursor: "pointer" }}> Log Out</span>
+          Hello{" "}
+          {loggedInUser ? (
+            <>
+              {" "}
+              <h4>
+                {loggedInUser?.username}{" "}
+                <span
+                  onClick={handleLogout}
+                  style={{ color: "red", cursor: "pointer" }}
+                >
+                  {" "}
+                  Log Out
+                </span>
+              </h4>{" "}
+            </>
+          ) : (
+            <h4>{"Stranger"}</h4>
+          )}
         </h4>
         <h3 style={{ color: "grey" }}>Suggestions For You</h3>
-        <div>
+        <div className="suggestionContainer">
           {users.map((item, idx) => (
-            <div key={item._id}>
+            <div className="followContainer" key={item._id}>
               {" "}
-              {item.username}{" "}
-              <button onClick={() => handleAddFallow(users[idx]._id)}>
-                Fallow
-              </button>{" "}
+              @{item.username}{" "}
+              {loggedInUser?.username === item?.owner?.username ? null : (
+                <button
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    color: "blue",
+                    fontWeight: "bolder",
+                    marginLeft: "10px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleAddFallow(users[idx]._id)}
+                >
+                  Fallow
+                </button>
+              )}
             </div>
           ))}
         </div>
