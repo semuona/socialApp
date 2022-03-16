@@ -81,3 +81,6 @@
   justify-content: space-between;
   align-items: flex-end;
 }
+.editToolsContainer {
+  margin-left: 20px;
+}

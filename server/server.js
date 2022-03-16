@@ -6,6 +6,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use("/users", require("./routes/userRoutes"));
 app.use("/posts", require("./routes/postRoutes"));
+app.use("/posts/comments", require("./api/comments"))
 
 const connectToDb = require("./config/db");
 

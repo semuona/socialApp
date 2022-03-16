@@ -43,14 +43,14 @@ export default function Header() {
   const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem("authorizedUser");
-    history.push("/Register");
+    history.push("/Login");
     setLoggedInUser("");
   };
 
   const style = {
-    width: "98px",
-    height: "40px",
-    marginLeft: "50px",
+    width: "80px",
+    height: "30px",
+    marginLeft: "150px",
   };
 
   return (
@@ -58,7 +58,7 @@ export default function Header() {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-          Instagram
+          <span style={{marginRight:"700px"}}>Instagram</span>
         </Typography>
         <div className={classes.navlinks}>
           <NavLink to="/" className={classes.link}>
@@ -73,11 +73,10 @@ export default function Header() {
               type="submit"
               color="secondary"
               variant="contained"
-              fullWidth
               style={style}
               onClick={handleLogout}
             >
-              Log out
+              <span style={{marginLeft:"40px", fontWeight:"bold"}}>Logout</span>
             </Button>
           ) : (
             <>
