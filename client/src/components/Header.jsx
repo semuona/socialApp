@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
-  const { setUsers, setLoggedInUser, loggedInUser } = useContext(SocialAppContext);
+  const { setUsers, setLoggedInUser, loggedInUser } =
+    useContext(SocialAppContext);
   const history = useHistory();
   const classes = useStyles();
 
@@ -58,7 +59,7 @@ export default function Header() {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-          <span style={{marginRight:"500px"}}>Instagram</span>
+          <span style={{ marginRight: "200px" }}>Instagram</span>
         </Typography>
         <div className={classes.navlinks}>
           <NavLink to="/" className={classes.link}>
@@ -76,7 +77,9 @@ export default function Header() {
               style={style}
               onClick={handleLogout}
             >
-              <span style={{marginLeft:"40px", fontWeight:"bold"}}>Logout</span>
+              <span style={{ marginLeft: "40px", fontWeight: "bold" }}>
+                Logout
+              </span>
             </Button>
           ) : (
             <>

@@ -25,9 +25,8 @@ export default function Register() {
 
   const handleClick = async () => {
     const response = await axios.post("/users/register", data);
-    console.log("response is", response);
+
     if (response.data.success) {
-      console.log("users are", users);
       setUsers([...users, response.data.newUser]);
       setLoggedInUser(response.data.newUser);
       history.push("/login");
