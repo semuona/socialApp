@@ -58,7 +58,7 @@ export default function Header() {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-          <span style={{marginRight:"700px"}}>Instagram</span>
+          <span style={{marginRight:"500px"}}>Instagram</span>
         </Typography>
         <div className={classes.navlinks}>
           <NavLink to="/" className={classes.link}>

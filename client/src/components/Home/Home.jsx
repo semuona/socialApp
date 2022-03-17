@@ -306,7 +306,7 @@ const handleCommentSave = async () => {
           <img
             src={item?.image}
             alt=""
-            style={{ height: "500px", width: "100%", objectFit: "cover" }}
+            style={{ height: "300px", width: "100%", objectFit: "cover" }}
           />
           <div className="iconContainer">
             <div style={{ display: "flex", justifyContent: "space-around" }}>
