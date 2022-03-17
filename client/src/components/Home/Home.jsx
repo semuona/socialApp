@@ -119,7 +119,7 @@ export default function Home() {
     loggedInUser?.followers?.map((followerId, idx) => {
       users?.map((item) => {
         if (item._id === followerId) {
-          followedUsers.push(item.username);
+          followedUsers.push(item.image);
         }
       });
     });
@@ -249,7 +249,9 @@ export default function Home() {
         }}
       >
         {followedUsers?.map((item) => (
-          <div
+          <img
+            src={item}
+            alt="hola"
             style={{
               borderRadius: "50%",
               border: "1px solid black",
@@ -259,10 +261,7 @@ export default function Home() {
               justifyContent: "center",
               alignItems: "center",
             }}
-          >
-            {" "}
-            {item}{" "}
-          </div>
+          />
         ))}
       </div>
       {posts?.map((item, idx) => (
@@ -425,9 +424,7 @@ export default function Home() {
             value={newPost}
             onChange={(e) => setNewPost(e.target.value)}
           />
-        ) : (
-          <p>No posts available</p>
-        )}
+        ) : null}
         {showCommentModal ? (
           <Modal
             save={handleCommentSave}

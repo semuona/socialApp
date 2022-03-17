@@ -1,12 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Hubballi&display=swap");
+
 .profileContainer {
-  width: 60%;
-  border: 1px solid red;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Hubballi", cursive;
 }
 .profileInfo {
   padding: 30px;
-  width: 100%;
+  width: 60%;
   height: 300px;
-  border: 10px solid green;
+  border-bottom: 10px solid rgb(147, 149, 147);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -15,4 +21,12 @@
   object-fit: "cover";
   border-radius: 50%;
   border: 3px solid rgb(122, 122, 128);
+}
+.userPostContainer {
+  border: 1px solid green;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }

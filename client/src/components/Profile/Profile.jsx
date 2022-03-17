@@ -24,6 +24,7 @@ export default function Profile() {
   const [blobFile, setBlobFile] = useState(null);
   const [profileUrl, setProfileUrl] = useState("");
   const [profileBlobFile, setProfileBlobFile] = useState(null);
+  const [loggedInUserPosts, setLoggedInUserPosts] = useState([]);
 
   const data = {
     owner: loggedInUser?._id,
@@ -34,7 +35,14 @@ export default function Profile() {
   useEffect(() => {
     setProfileUrl(loggedInUser?.image);
   }, []);
+  /* useEffect(()=> {
+ const getData = () => {
+posts.filter(item ) => {
+  if (item.id === )
+}
 
+ }
+}) */
   const handleProfilePhoto = async () => {
     const formdata = new FormData();
 
@@ -75,6 +83,8 @@ export default function Profile() {
 
     if (response.data.success) setPosts([...posts, response.data.post]);
   };
+
+  /* -------------POST IMAGE CHANGE ---------------------- */
   const handleImageChange = (e) => {
     console.log("File is", e.currentTarget.files[0]);
     // console.log('File is', e.target.files[0])
@@ -85,6 +95,8 @@ export default function Profile() {
 
     setBlobFile(e.currentTarget.files[0]);
   };
+
+  /* -------------Profile CHange--------------------- */
   const handleProfileChange = (e) => {
     console.log("File is", e.currentTarget.files[0]);
 
@@ -94,6 +106,7 @@ export default function Profile() {
 
     setProfileBlobFile(e.currentTarget.files[0]);
   };
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
     backgroundColor: purple[500],
@@ -102,7 +115,7 @@ export default function Profile() {
     },
   }));
   return (
-    <div style={{ border: "1px solid red" }} className="profileContainer">
+    <div className="profileContainer">
       <div className="profileInfo">
         <img
           src={profileUrl}
@@ -112,22 +125,25 @@ export default function Profile() {
         />
         <h1>
           {" "}
-          Welcome: {loggedInUser ? loggedInUser.username : "Stranger"}{" "}
-          <ColorButton variant="contained" onClick={() => setShowModal(true)}>
-            Add Post
-          </ColorButton>
+          Welcome: @{loggedInUser ? loggedInUser.username : "Stranger"}{" "}
+          <div>
+            <h5>{loggedInUser?.followers.length} followers</h5>{" "}
+            <h5> 3 posts</h5>{" "}
+          </div>
         </h1>
-        <div>
-          <h2>{loggedInUser?.followers.length} followers</h2> <h2> 20 Posts</h2>{" "}
-        </div>
+
+        <ColorButton variant="contained" onClick={() => setShowModal(true)}>
+          Add Post
+        </ColorButton>
+
         <div>
           <label
-            htmlFor="file"
+            htmlFor="file1"
             style={{
               cursor: "pointer",
               position: "absolute",
-              top: "230px",
-              left: "410px",
+              top: "260px",
+              left: "420px",
             }}
           >
             <AddAPhotoIcon />
@@ -138,40 +154,43 @@ export default function Profile() {
               style={{
                 cursor: "pointer",
                 position: "absolute",
-                top: "260px",
-                left: "410px",
+                top: "290px",
+                left: "420px",
               }}
             />
           </div>
           <input
             accept="image/*"
             onChange={handleProfileChange}
-            id="file"
+            id="file1"
             type="file"
             style={{ visibility: "hidden" }}
+            //value={profileBlobFile}
           />
         </div>
       </div>
       <h1>Your Posts:</h1>
-      {posts?.map((item) => (
-        <div
-          style={{
-            border: "1px solid",
-            padding: "30px",
-            margin: "20px",
-          }}
-          key={item?._id}
-        >
-          <p>{item?.description}</p>
-          <img
-            src={item?.image}
-            alt=""
-            style={{ height: "300px", width: "300px", objectFit: "cover" }}
-          />
-          <button>Delete post</button>
-          <button>Edit post</button>
-        </div>
-      ))}
+      <div className="userPostContainer">
+        {posts?.map((item) =>
+          item?.owner._id === loggedInUser?._id ? (
+            <div
+              style={{
+                border: "1px solid",
+                padding: "30px",
+                margin: "20px",
+              }}
+              key={item?._id}
+            >
+              <p>{item?.description}</p>
+              <img
+                src={item?.image}
+                alt=""
+                style={{ height: "300px", width: "300px", objectFit: "cover" }}
+              />
+            </div>
+          ) : null
+        )}
+      </div>
       {showModal ? (
         <Modal
           save={handleSave}
