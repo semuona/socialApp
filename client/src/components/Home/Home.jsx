@@ -269,8 +269,7 @@ export default function Home() {
           <h1 className="creatorContainer">
             <div className="fallow">
               {" "}
-              Creator:
-              {item?.owner.username}{" "}
+              Creator: @{item?.owner.username}{" "}
               {loggedInUser?.username === item?.owner.username ? null : (
                 <button
                   style={{

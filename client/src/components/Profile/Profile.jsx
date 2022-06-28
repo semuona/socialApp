@@ -128,7 +128,7 @@ posts.filter(item ) => {
           Welcome: @{loggedInUser ? loggedInUser.username : "Stranger"}{" "}
           <div>
             <h5>{loggedInUser?.followers.length} followers</h5>{" "}
-            <h5> 3 posts</h5>{" "}
+            <h5> 5 posts</h5>{" "}
           </div>
         </h1>
 
